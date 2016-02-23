@@ -59,9 +59,11 @@
           </div><br>
 
           <br>
-          <button class="btn btn-default btn-block" onclick="calculate();">Calculate</button><br><br>
+          <button class="btn btn-default btn-block" onclick="calculate();">Calculate</button><br>
 
-          <div id="output">
+           <center><a href="https://en.wikipedia.org/wiki/Kelly_criterion">What is the Kelly Criterion?</a></center><br><br>
+
+            <div id="output">
 
           </div>
         </div>
@@ -78,43 +80,35 @@
 
       function calculate() {
         if (bankroll.value != "" && csgl1.value != "" && csgl2.value != "" && real1.value != "" && real2.value != "") {
-          var c1 = csgl1.value/100;
-          var c2 = csgl2.value/100;
-          var r1 = real1.value/100;
-          var r2 = real2.value/100;
+            if (csgl1.value > csgl2.value) {
+                var c1 = csgl1.value/100;
+                var c2 = csgl2.value/100;
+                var r1 = real1.value/100;
+                var r2 = real2.value/100;
+            } else {
+                var c2 = csgl1.value/100;
+                var c1 = csgl2.value/100;
+                var r2 = real1.value/100;
+                var r1 = real2.value/100;
+            }
+
           var fraction = ((c1 / c2) * r2 - r1) / (c1 / c2);
 
           var value = bankroll.value * fraction;
           value = +value.toFixed(2);
 
           var str = "<center>The Kelly Criterion says:<br><h4>";
+            value = Math.abs(value);
 
-          if (c1 > c2) {
-            if (r1 < c1) {
+            if (csgl1.value < csgl2.value || (csgl1.value == csgl2.value && real1.value < real2.value)) {
               str += "You should bet $" + value + " on Team 2";
-            } else if (r1 > c1) {
-              value = Math.abs(value);
-              str += "You should bet $" + value + " on Team 1";
-            }
-          } else if (c1 < c2) {
-            if (r2 < c2) {
-              value = Math.abs(value);
-              str += "You should bet $" + value + " on Team 1";
-            } else if (r2 > c2) {     
-              str += "You should bet $" + value + " on Team 2";
-            }
-          } else {
-            if (r1 < c1) {
-              str += "You should bet $" + value + " on Team 2";
-            } else if (r1 > c1) {
-              value = Math.abs(value);
+            } else if (csgl1.value > csgl2.value || (csgl1.value == csgl2.value && real1.value > real2.value)) {
               str += "You should bet $" + value + " on Team 1";
             } else {
-              str += "This match is a coin toss";
+                str += "This match is a coin toss";
             }
-          }
 
-          str += "</h4>Suggested Bet: $" + (value/3).toFixed(2) + " (<a href='#' data-toggle='tooltip' data-placement='right' title='Due to human error and/or luck, it is suggested to take only 1/2, 1/3 or even 1/4 of the Kelly Criterion'>?</a>)</center>";
+          str += "</h4>Suggested Bet: $" + (value/4).toFixed(2) + " (<a href='#' data-toggle='tooltip' data-placement='right' title='Due to human error and/or luck, it is suggested to take only 1/3, 1/4 or less of the Kelly Criterion'>?</a>)</center>";
 
           document.getElementById("output").innerHTML = str;
 
