@@ -1,7 +1,7 @@
 Kelly Criterion Calculator
 ========
 
-A Kelly Criterion (Betting Value) calculator for CSGO. Needs a webhost to work. 
+A Kelly Criterion (Betting Value) calculator for CSGO. Needs a webhost to work.  
 Or use it here: http://nakroma.github.io/kelly-criterion/
 
 
